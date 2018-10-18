@@ -1,0 +1,60 @@
+btRD0
+RD0- ON/OFF
+408
+680
+94
+Button2
+Status "J"
+672
+208
+75
+Button3
+Analog
+706
+376
+112
+Button4
+Status "D"
+664
+568
+94
+btPWMmenos
+PWM-
+144
+680
+94
+btRD1on
+RD1 - ON
+200
+680
+94
+btPWMmais
+PWM+
+80
+680
+94
+btRD1off
+RD1 - OFF
+256
+680
+94
+btPWMrOn
+PWMr - ON
+304
+680
+94
+btPWMrOff
+PWMr - OFF
+352
+680
+94
+btTela2
+btTela2
+584
+743
+94
+Button1
+Cria
+592
+608
+94

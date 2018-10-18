@@ -6,16 +6,18 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Menus, StdCtrls, LazSerial, synaser;
+  Menus, StdCtrls, Buttons, CheckLst, LazSerial, synaser;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
+    BitBtn1: TBitBtn;
     btRD0: TButton;
     btPWMrOff: TButton;
     btTela2: TButton;
+    Button1: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
@@ -25,6 +27,7 @@ type
     btRD1off: TButton;
     btPWMrOn: TButton;
     Image1: TImage;
+    ListBox1: TListBox;
     MenuItem6: TMenuItem;
     PopupMenu1: TPopupMenu;
     RJ7: TImage;
@@ -51,11 +54,14 @@ type
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
     StaticText1: TStaticText;
+    StaticText3: TStaticText;
     Timer1: TTimer;
     Timer2: TTimer;
+    procedure BitBtn1Click(Sender: TObject);
     procedure btPWMrOffClick(Sender: TObject);
     procedure btRD0Click(Sender: TObject);
     procedure btTela2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
@@ -69,11 +75,13 @@ type
     procedure LazSerial1RxData(Sender: TObject);
     procedure LazSerial1Status(Sender: TObject; Reason: THookSerialReason;
       const Value: string);
+    procedure ListBox1Click(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
+    procedure StaticText3Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure enableButtons();
     procedure Timer2Timer(Sender: TObject);
@@ -121,6 +129,8 @@ begin
   if digIn[0] then RD0.Picture.loadFromFile('disjoff.bmp') else RD0.Picture.loadFromFile('disjdes.bmp');
 
   StaticText1.Caption := inttostr(anaIn[0]);
+
+  StaticText3.Caption:=formatdatetime('dd/mm/yy hh:mm:ss,z',now);
 end;
 
 
@@ -162,6 +172,16 @@ begin
   Form2.Show;
 end;
 
+procedure TForm1.Button1Click(Sender: TObject);
+var s:Tshape;
+begin
+ s:=Tshape.Create(Form1);
+ s.Top:=56;
+ s.Left:=72;
+ s.Parent:=Form1;
+ s.Name:='S1';
+end;
+
 procedure TForm1.btPWMrOffClick(Sender: TObject);
 var b:byte;
 begin
@@ -169,6 +189,24 @@ begin
   b := ord('1');
   LazSerial1.WriteBuffer(b,1);
 end;
+
+procedure TForm1.BitBtn1Click(Sender: TObject);
+var i:integer;
+begin
+     for i:=0 to ComponentCount-1 do
+     begin
+         if components[i] is Tbutton then
+         begin
+           listbox1.Items.Add((components[i] as Tbutton).name);
+           listbox1.Items.Add((components[i] as Tbutton).caption);
+           listbox1.Items.Add(inttostr((components[i] as Tbutton).top));
+           listbox1.Items.Add(inttostr((components[i] as Tbutton).left));
+           listbox1.Items.Add(inttostr((components[i] as Tbutton).width));
+           end;
+     end;
+     listbox1.Items.SaveToFile('list.txt');
+end;
+
 
 procedure TForm1.Button2Click(Sender: TObject);
 var b:byte;
@@ -299,6 +337,11 @@ begin
   Timer1.Enabled := true;
 end;
 
+procedure TForm1.ListBox1Click(Sender: TObject);
+begin
+
+end;
+
 
 procedure TForm1.MenuItem4Click(Sender: TObject);
 begin
@@ -313,6 +356,11 @@ end;
 procedure TForm1.MenuItem6Click(Sender: TObject);
 begin
   Form2.Show;
+end;
+
+procedure TForm1.StaticText3Click(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);  //sends the requests for the device using the timer event

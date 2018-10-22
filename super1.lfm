@@ -15,6 +15,7 @@ object Form1: TForm1
   Font.Style = [fsBold]
   Menu = MainMenu1
   OnCreate = FormCreate
+  Position = poDesktopCenter
   LCLVersion = '1.8.2.0'
   object Image1: TImage
     Left = 40
@@ -1185,54 +1186,6 @@ object Form1: TForm1
     TabOrder = 1
     Visible = False
   end
-  object RJ0: TImage
-    Left = 325
-    Height = 24
-    Top = 713
-    Width = 24
-  end
-  object RJ1: TImage
-    Left = 301
-    Height = 25
-    Top = 713
-    Width = 25
-  end
-  object RJ2: TImage
-    Left = 278
-    Height = 24
-    Top = 713
-    Width = 24
-  end
-  object RJ3: TImage
-    Left = 254
-    Height = 25
-    Top = 712
-    Width = 25
-  end
-  object RJ4: TImage
-    Left = 231
-    Height = 24
-    Top = 713
-    Width = 24
-  end
-  object RJ5: TImage
-    Left = 207
-    Height = 25
-    Top = 712
-    Width = 25
-  end
-  object RJ6: TImage
-    Left = 184
-    Height = 24
-    Top = 713
-    Width = 24
-  end
-  object RJ7: TImage
-    Left = 160
-    Height = 25
-    Top = 712
-    Width = 25
-  end
   object Button3: TButton
     Left = 376
     Height = 32
@@ -1368,54 +1321,6 @@ object Form1: TForm1
     OnClick = btPWMrOffClick
     ParentFont = False
     TabOrder = 10
-  end
-  object RD0: TImage
-    Left = 677
-    Height = 24
-    Top = 713
-    Width = 24
-  end
-  object RD1: TImage
-    Left = 653
-    Height = 25
-    Top = 713
-    Width = 25
-  end
-  object RD2: TImage
-    Left = 630
-    Height = 24
-    Top = 714
-    Width = 24
-  end
-  object RD3: TImage
-    Left = 606
-    Height = 25
-    Top = 713
-    Width = 25
-  end
-  object RD4: TImage
-    Left = 583
-    Height = 24
-    Top = 714
-    Width = 24
-  end
-  object RD5: TImage
-    Left = 559
-    Height = 25
-    Top = 713
-    Width = 25
-  end
-  object RD6: TImage
-    Left = 536
-    Height = 24
-    Top = 714
-    Width = 24
-  end
-  object RD7: TImage
-    Left = 512
-    Height = 25
-    Top = 713
-    Width = 25
   end
   object btTela2: TButton
     Left = 743
@@ -1562,6 +1467,7 @@ object Form1: TForm1
     end
   end
   object Timer2: TTimer
+    Enabled = False
     Interval = 500
     OnTimer = Timer2Timer
     left = 816

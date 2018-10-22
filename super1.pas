@@ -31,22 +31,6 @@ type
     ListBox1: TListBox;
     MenuItem6: TMenuItem;
     PopupMenu1: TPopupMenu;
-    RJ7: TImage;
-    RD1: TImage;
-    RD2: TImage;
-    RD3: TImage;
-    RD4: TImage;
-    RD5: TImage;
-    RD6: TImage;
-    RD7: TImage;
-    RJ0: TImage;
-    RD0: TImage;
-    RJ1: TImage;
-    RJ2: TImage;
-    RJ3: TImage;
-    RJ4: TImage;
-    RJ5: TImage;
-    RJ6: TImage;
     LazSerial1: TLazSerial;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
@@ -98,9 +82,12 @@ type
      digOut: array[0..99] of boolean;
      anaIn: array[0..99] of word;
      anaOut: array[0..99] of word;
-     state0: array[0..2] of string;
-     stateOn: array[0..2] of string;
-     stateOff: array[0..2] of string;
+     state0: array[0..99] of string;
+     stateOn: array[0..99] of string;
+     stateOff: array[0..99] of string;
+     supLim: array[0..99] of int;
+     infLim: array[0..99] of int;
+     scale: array[0..99] of real;
   end;
 
 var
@@ -117,22 +104,22 @@ uses super2;
 procedure TForm1.updateScreen();   //responsible for updating the screen with no relation to the comunication protocol (called by the timer)
 var i:integer;
 begin
-  if digIn[15] then RJ7.Picture.loadFromFile('disjoff.bmp') else RJ7.Picture.loadFromFile('disjdes.bmp');
-  if digIn[14] then RJ6.Picture.loadFromFile('disjoff.bmp') else RJ6.Picture.loadFromFile('disjdes.bmp');
-  if digIn[13] then RJ5.Picture.loadFromFile('disjoff.bmp') else RJ5.Picture.loadFromFile('disjdes.bmp');
-  if digIn[12] then RJ4.Picture.loadFromFile('disjoff.bmp') else RJ4.Picture.loadFromFile('disjdes.bmp');
-  if digIn[11] then RJ3.Picture.loadFromFile('disjoff.bmp') else RJ3.Picture.loadFromFile('disjdes.bmp');
-  if digIn[10] then RJ2.Picture.loadFromFile('disjoff.bmp') else RJ2.Picture.loadFromFile('disjdes.bmp');
-  if digIn[9] then RJ1.Picture.loadFromFile('disjoff.bmp') else RJ1.Picture.loadFromFile('disjdes.bmp');
-  if digIn[8] then RJ0.Picture.loadFromFile('disjoff.bmp') else RJ0.Picture.loadFromFile('disjdes.bmp');
-  if digIn[7] then RD7.Picture.loadFromFile('disjoff.bmp') else RD7.Picture.loadFromFile('disjdes.bmp');
-  if digIn[6] then RD6.Picture.loadFromFile('disjoff.bmp') else RD6.Picture.loadFromFile('disjdes.bmp');
-  if digIn[5] then RD5.Picture.loadFromFile('disjoff.bmp') else RD5.Picture.loadFromFile('disjdes.bmp');
-  if digIn[4] then RD4.Picture.loadFromFile('disjoff.bmp') else RD4.Picture.loadFromFile('disjdes.bmp');
-  if digIn[3] then RD3.Picture.loadFromFile('disjoff.bmp') else RD3.Picture.loadFromFile('disjdes.bmp');
-  if digIn[2] then RD2.Picture.loadFromFile('disjoff.bmp') else RD2.Picture.loadFromFile('disjdes.bmp');
-  if digIn[1] then RD1.Picture.loadFromFile('disjoff.bmp') else RD1.Picture.loadFromFile('disjdes.bmp');
-  if digIn[0] then RD0.Picture.loadFromFile('disjoff.bmp') else RD0.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[15] then RJ7.Picture.loadFromFile('disjoff.bmp') else RJ7.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[14] then RJ6.Picture.loadFromFile('disjoff.bmp') else RJ6.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[13] then RJ5.Picture.loadFromFile('disjoff.bmp') else RJ5.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[12] then RJ4.Picture.loadFromFile('disjoff.bmp') else RJ4.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[11] then RJ3.Picture.loadFromFile('disjoff.bmp') else RJ3.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[10] then RJ2.Picture.loadFromFile('disjoff.bmp') else RJ2.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[9] then RJ1.Picture.loadFromFile('disjoff.bmp') else RJ1.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[8] then RJ0.Picture.loadFromFile('disjoff.bmp') else RJ0.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[7] then RD7.Picture.loadFromFile('disjoff.bmp') else RD7.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[6] then RD6.Picture.loadFromFile('disjoff.bmp') else RD6.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[5] then RD5.Picture.loadFromFile('disjoff.bmp') else RD5.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[4] then RD4.Picture.loadFromFile('disjoff.bmp') else RD4.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[3] then RD3.Picture.loadFromFile('disjoff.bmp') else RD3.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[2] then RD2.Picture.loadFromFile('disjoff.bmp') else RD2.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[1] then RD1.Picture.loadFromFile('disjoff.bmp') else RD1.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[0] then RD0.Picture.loadFromFile('disjoff.bmp') else RD0.Picture.loadFromFile('disjdes.bmp');
 
   for i:=0 to ComponentCount-1 do
      begin
@@ -141,12 +128,12 @@ begin
          with (components[i] as TImage) do
             begin
 
-            if digIn[components[i].Tag] then components[i].Picture.loadFromFile('disjoff.bmp') else components[i].Picture.loadFromFile('disjon.bmp');
+            if digIn[tag] then Picture.loadFromFile('disjoff.bmp') else Picture.loadFromFile('disjon.bmp');
 
             end;
            end;
          end;
-     end;
+  i := 0;
   StaticText1.Caption := inttostr(anaIn[0]);
 
   StaticText3.Caption:=formatdatetime('dd/mm/yy hh:mm:ss,z',now);
@@ -296,9 +283,11 @@ end;
 procedure TForm1.Button5Click(Sender: TObject);
 var i:integer;
   IM:Timage;
+  PB:TProgressBar;
+  ST:TStaticText;
 begin
   i := 0;
-  listbox1.Items.LoadFromFile('config.txt');
+  listbox1.Items.LoadFromFile('dig.txt');
   while listbox1.Items.Count > 0 do
   begin
     IM := Timage.Create(form1);
@@ -324,9 +313,42 @@ begin
 
     IM.Visible:=true;
 
-    i:=i+1;
     IM.name := 'IM'+inttostr(i);
-  end
+    i:=i+1;
+
+  end;
+
+  i := 0;
+  listbox1.Items.LoadFromFile('ana.txt');
+  while listbox1.Items.Count > 0 do
+  begin
+    PB.parent := form1;
+    PB.tag := strtoint(listbox1.Items[0]);
+    ST.parent := form1;
+    ST.tag := strtoint(listbox1.Items[0]);
+    listbox1.Items.Delete(0);
+
+    PB.top := strtoint(listbox1.Items[0]);
+    ST.top := strtoint(listbox1.Items[0])+20;
+    listbox1.Items.delete(0);
+
+    PB.left := strtoint(listbox1.Items[0]);
+    ST.left := strtoint(listbox1.Items[0]);
+    listbox1.Items.delete(0);
+
+    supLim[i] := listbox1.Items[0];
+    listbox1.Items.delete(0);
+
+    infLim[i] := listbox1.Items[0];
+    listbox1.Items.delete(0);
+
+    scale[i] := listbox1.Items[0];
+    listbox1.Items.delete(0);
+
+    i:=i+1;
+  end;
+
+  Timer2.Enabled := true;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

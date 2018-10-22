@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Compiler Value="D:\lazarus\fpc\3.0.4\bin\i386-win32\fpc.exe" Date="1280922202"/>
-  <Params Value=" -MObjFPC -Scghi -O1 -g -gl -WG -l -vewnhibq &quot;-FiD:\Usuarios\Yago\OneDrive\UFPE\supervisorios\Projeto 3\Lazarus\lib\i386-win32&quot; -FuD:\Usuarios\Yago\Documentos\Lazarus\lazserial2\lib\i386-win32 -FuD:\lazarus\lcl\units\i386-win32\win32 -FuD:\lazarus\lcl\units\i386-win32 -FuD:\lazarus\components\lazutils\lib\i386-win32 -FuD:\lazarus\packager\units\i386-win32 &quot;-FuD:\Usuarios\Yago\OneDrive\UFPE\supervisorios\Projeto 3\Lazarus\&quot; &quot;-FUD:\Usuarios\Yago\OneDrive\UFPE\supervisorios\Projeto 3\Lazarus\lib\i386-win32\&quot; -dUseCThreads -dLCL -dLCLwin32 super_1.lpr"/>
+  <Params Value=" -MObjFPC -Scghi -O1 -g -gl -WG -l -vewnhibq &quot;-FiD:\Usuarios\Yago\OneDrive\UFPE\supervisorios\Projeto 3\Laz\lib\i386-win32&quot; -FuD:\Usuarios\Yago\Documentos\Lazarus\lazserial2\lib\i386-win32 -FuD:\lazarus\lcl\units\i386-win32\win32 -FuD:\lazarus\lcl\units\i386-win32 -FuD:\lazarus\components\lazutils\lib\i386-win32 -FuD:\lazarus\packager\units\i386-win32 &quot;-FuD:\Usuarios\Yago\OneDrive\UFPE\supervisorios\Projeto 3\Laz\&quot; &quot;-FUD:\Usuarios\Yago\OneDrive\UFPE\supervisorios\Projeto 3\Laz\lib\i386-win32\&quot; -dUseCThreads -dLCL -dLCLwin32 super_1.lpr"/>
 </CONFIG>

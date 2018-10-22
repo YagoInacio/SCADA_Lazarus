@@ -6,16 +6,18 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Menus, StdCtrls, LazSerial, synaser;
+  Menus, StdCtrls, Buttons, CheckLst, LazSerial, synaser;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
+    BitBtn1: TBitBtn;
     btRD0: TButton;
     btPWMrOff: TButton;
     btTela2: TButton;
+    Button1: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
@@ -24,25 +26,11 @@ type
     btRD1on: TButton;
     btRD1off: TButton;
     btPWMrOn: TButton;
+    Button5: TButton;
     Image1: TImage;
+    ListBox1: TListBox;
     MenuItem6: TMenuItem;
     PopupMenu1: TPopupMenu;
-    RJ7: TImage;
-    RD1: TImage;
-    RD2: TImage;
-    RD3: TImage;
-    RD4: TImage;
-    RD5: TImage;
-    RD6: TImage;
-    RD7: TImage;
-    RJ0: TImage;
-    RD0: TImage;
-    RJ1: TImage;
-    RJ2: TImage;
-    RJ3: TImage;
-    RJ4: TImage;
-    RJ5: TImage;
-    RJ6: TImage;
     LazSerial1: TLazSerial;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
@@ -51,11 +39,14 @@ type
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
     StaticText1: TStaticText;
+    StaticText3: TStaticText;
     Timer1: TTimer;
     Timer2: TTimer;
+    procedure BitBtn1Click(Sender: TObject);
     procedure btPWMrOffClick(Sender: TObject);
     procedure btRD0Click(Sender: TObject);
     procedure btTela2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
@@ -64,16 +55,19 @@ type
     procedure btRD1onClick(Sender: TObject);
     procedure btRD1offClick(Sender: TObject);
     procedure btPWMrOnClick(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure LazSerial1RxData(Sender: TObject);
     procedure LazSerial1Status(Sender: TObject; Reason: THookSerialReason;
       const Value: string);
+    procedure ListBox1Click(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
+    procedure StaticText3Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure enableButtons();
     procedure Timer2Timer(Sender: TObject);
@@ -88,6 +82,9 @@ type
      digOut: array[0..99] of boolean;
      anaIn: array[0..99] of word;
      anaOut: array[0..99] of word;
+     state0: array[0..99] of string;
+     stateOn: array[0..99] of string;
+     stateOff: array[0..99] of string;
   end;
 
 var
@@ -102,25 +99,41 @@ uses super2;
 { TForm1 }
 
 procedure TForm1.updateScreen();   //responsible for updating the screen with no relation to the comunication protocol (called by the timer)
+var i:integer;
 begin
-  if digIn[15] then RJ7.Picture.loadFromFile('disjoff.bmp') else RJ7.Picture.loadFromFile('disjdes.bmp');
-  if digIn[14] then RJ6.Picture.loadFromFile('disjoff.bmp') else RJ6.Picture.loadFromFile('disjdes.bmp');
-  if digIn[13] then RJ5.Picture.loadFromFile('disjoff.bmp') else RJ5.Picture.loadFromFile('disjdes.bmp');
-  if digIn[12] then RJ4.Picture.loadFromFile('disjoff.bmp') else RJ4.Picture.loadFromFile('disjdes.bmp');
-  if digIn[11] then RJ3.Picture.loadFromFile('disjoff.bmp') else RJ3.Picture.loadFromFile('disjdes.bmp');
-  if digIn[10] then RJ2.Picture.loadFromFile('disjoff.bmp') else RJ2.Picture.loadFromFile('disjdes.bmp');
-  if digIn[9] then RJ1.Picture.loadFromFile('disjoff.bmp') else RJ1.Picture.loadFromFile('disjdes.bmp');
-  if digIn[8] then RJ0.Picture.loadFromFile('disjoff.bmp') else RJ0.Picture.loadFromFile('disjdes.bmp');
-  if digIn[7] then RD7.Picture.loadFromFile('disjoff.bmp') else RD7.Picture.loadFromFile('disjdes.bmp');
-  if digIn[6] then RD6.Picture.loadFromFile('disjoff.bmp') else RD6.Picture.loadFromFile('disjdes.bmp');
-  if digIn[5] then RD5.Picture.loadFromFile('disjoff.bmp') else RD5.Picture.loadFromFile('disjdes.bmp');
-  if digIn[4] then RD4.Picture.loadFromFile('disjoff.bmp') else RD4.Picture.loadFromFile('disjdes.bmp');
-  if digIn[3] then RD3.Picture.loadFromFile('disjoff.bmp') else RD3.Picture.loadFromFile('disjdes.bmp');
-  if digIn[2] then RD2.Picture.loadFromFile('disjoff.bmp') else RD2.Picture.loadFromFile('disjdes.bmp');
-  if digIn[1] then RD1.Picture.loadFromFile('disjoff.bmp') else RD1.Picture.loadFromFile('disjdes.bmp');
-  if digIn[0] then RD0.Picture.loadFromFile('disjoff.bmp') else RD0.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[15] then RJ7.Picture.loadFromFile('disjoff.bmp') else RJ7.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[14] then RJ6.Picture.loadFromFile('disjoff.bmp') else RJ6.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[13] then RJ5.Picture.loadFromFile('disjoff.bmp') else RJ5.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[12] then RJ4.Picture.loadFromFile('disjoff.bmp') else RJ4.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[11] then RJ3.Picture.loadFromFile('disjoff.bmp') else RJ3.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[10] then RJ2.Picture.loadFromFile('disjoff.bmp') else RJ2.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[9] then RJ1.Picture.loadFromFile('disjoff.bmp') else RJ1.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[8] then RJ0.Picture.loadFromFile('disjoff.bmp') else RJ0.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[7] then RD7.Picture.loadFromFile('disjoff.bmp') else RD7.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[6] then RD6.Picture.loadFromFile('disjoff.bmp') else RD6.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[5] then RD5.Picture.loadFromFile('disjoff.bmp') else RD5.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[4] then RD4.Picture.loadFromFile('disjoff.bmp') else RD4.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[3] then RD3.Picture.loadFromFile('disjoff.bmp') else RD3.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[2] then RD2.Picture.loadFromFile('disjoff.bmp') else RD2.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[1] then RD1.Picture.loadFromFile('disjoff.bmp') else RD1.Picture.loadFromFile('disjdes.bmp');
+  //if digIn[0] then RD0.Picture.loadFromFile('disjoff.bmp') else RD0.Picture.loadFromFile('disjdes.bmp');
 
+  for i:=0 to ComponentCount-1 do
+     begin
+         if (components[i] is TImage) and (components[i].name <> 'Image1') then
+         begin
+         with (components[i] as TImage) do
+            begin
+
+            if digIn[tag] then Picture.loadFromFile('disjoff.bmp') else Picture.loadFromFile('disjon.bmp');
+
+            end;
+           end;
+         end;
+  i := 0;
   StaticText1.Caption := inttostr(anaIn[0]);
+
+  StaticText3.Caption:=formatdatetime('dd/mm/yy hh:mm:ss,z',now);
 end;
 
 
@@ -162,6 +175,16 @@ begin
   Form2.Show;
 end;
 
+procedure TForm1.Button1Click(Sender: TObject);
+var s:Tshape;
+begin
+ s:=Tshape.Create(Form1);
+ s.Top:=56;
+ s.Left:=72;
+ s.Parent:=Form1;
+ s.Name:='S1';
+end;
+
 procedure TForm1.btPWMrOffClick(Sender: TObject);
 var b:byte;
 begin
@@ -169,6 +192,24 @@ begin
   b := ord('1');
   LazSerial1.WriteBuffer(b,1);
 end;
+
+procedure TForm1.BitBtn1Click(Sender: TObject);
+var i:integer;
+begin
+     for i:=0 to ComponentCount-1 do
+     begin
+         if components[i] is Tbutton then
+         begin
+           listbox1.Items.Add((components[i] as Tbutton).name);
+           listbox1.Items.Add((components[i] as Tbutton).caption);
+           listbox1.Items.Add(inttostr((components[i] as Tbutton).top));
+           listbox1.Items.Add(inttostr((components[i] as Tbutton).left));
+           listbox1.Items.Add(inttostr((components[i] as Tbutton).width));
+           end;
+     end;
+     listbox1.Items.SaveToFile('list.txt');
+end;
+
 
 procedure TForm1.Button2Click(Sender: TObject);
 var b:byte;
@@ -236,6 +277,66 @@ begin
   LazSerial1.WriteBuffer(b,1);
 end;
 
+procedure TForm1.Button5Click(Sender: TObject);
+var i:integer;
+  IM:Timage;
+  PB:TProgressBar;
+  ST:TStaticText;
+begin
+  i := 0;
+  listbox1.Items.LoadFromFile('dig.txt');
+  while listbox1.Items.Count > 0 do
+  begin
+    IM := Timage.Create(form1);
+    IM.parent := form1;
+    IM.tag := strtoint(listbox1.Items[0]);
+    listbox1.Items.Delete(0);
+
+    IM.top := strtoint(listbox1.Items[0]);
+    listbox1.Items.delete(0);
+
+    IM.left := strtoint(listbox1.Items[0]);
+    listbox1.Items.delete(0);
+
+    state0[i] := listbox1.Items[0];
+    IM.Picture.loadFromFile(state0[0]);
+    listbox1.Items.delete(0);
+
+    stateOn[i] := listbox1.Items[0];
+    listbox1.Items.delete(0);
+
+    stateOff[i] := listbox1.Items[0];
+    listbox1.Items.delete(0);
+
+    IM.Visible:=true;
+
+    IM.name := 'IM'+inttostr(i);
+    i:=i+1;
+
+  end;
+
+  listbox1.Items.LoadFromFile('ana.txt');
+  while listbox1.Items.Count > 0 do
+  begin
+    PB.parent := form1;
+    PB.tag := strtoint(listbox1.Items[0]);
+    ST.parent := form1;
+    ST.tag := strtoint(listbox1.Items[0]);
+    listbox1.Items.Delete(0);
+
+    PB.top := strtoint(listbox1.Items[0]);
+    ST.top := strtoint(listbox1.Items[0])+20;
+    listbox1.Items.delete(0);
+
+    PB.left := strtoint(listbox1.Items[0]);
+    ST.left := strtoint(listbox1.Items[0]);
+    listbox1.Items.delete(0);
+
+  end;
+
+  Timer2.Enabled := true;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
      cmd := ' ';
@@ -252,14 +353,13 @@ end;
 
 
 procedure TForm1.LazSerial1RxData(Sender: TObject);  //when something is received on the serial port this function will organize according to the data
-var s, s1:string;
+var s:string;
     v:byte;
-    val:integer;
+
 begin
   s:=LazSerial1.ReadData;
   if cmd = 's' then   //Status "J"
   begin
-    s1:='';
     v:=ord(s[1]);
 
     if (v and 128)>1 then digIn[15] := true else digIn[15]:= false;
@@ -280,7 +380,6 @@ begin
 
     if cmd = 'q' then    //Status "D"
   begin
-    s1:='';
     v:=ord(s[1]);
 
     if (v and 128)>1 then digIn[7] := true else digIn[7]:= false;
@@ -301,6 +400,11 @@ begin
   Timer1.Enabled := true;
 end;
 
+procedure TForm1.ListBox1Click(Sender: TObject);
+begin
+
+end;
+
 
 procedure TForm1.MenuItem4Click(Sender: TObject);
 begin
@@ -315,6 +419,11 @@ end;
 procedure TForm1.MenuItem6Click(Sender: TObject);
 begin
   Form2.Show;
+end;
+
+procedure TForm1.StaticText3Click(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);  //sends the requests for the device using the timer event

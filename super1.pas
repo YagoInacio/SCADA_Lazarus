@@ -26,6 +26,7 @@ type
     btRD1on: TButton;
     btRD1off: TButton;
     btPWMrOn: TButton;
+    Button5: TButton;
     Image1: TImage;
     ListBox1: TListBox;
     MenuItem6: TMenuItem;
@@ -70,6 +71,7 @@ type
     procedure btRD1onClick(Sender: TObject);
     procedure btRD1offClick(Sender: TObject);
     procedure btPWMrOnClick(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure LazSerial1RxData(Sender: TObject);
@@ -96,6 +98,9 @@ type
      digOut: array[0..99] of boolean;
      anaIn: array[0..99] of word;
      anaOut: array[0..99] of word;
+     state0: array[0..2] of string;
+     stateOn: array[0..2] of string;
+     stateOff: array[0..2] of string;
   end;
 
 var
@@ -110,6 +115,7 @@ uses super2;
 { TForm1 }
 
 procedure TForm1.updateScreen();   //responsible for updating the screen with no relation to the comunication protocol (called by the timer)
+var i:integer;
 begin
   if digIn[15] then RJ7.Picture.loadFromFile('disjoff.bmp') else RJ7.Picture.loadFromFile('disjdes.bmp');
   if digIn[14] then RJ6.Picture.loadFromFile('disjoff.bmp') else RJ6.Picture.loadFromFile('disjdes.bmp');
@@ -128,6 +134,19 @@ begin
   if digIn[1] then RD1.Picture.loadFromFile('disjoff.bmp') else RD1.Picture.loadFromFile('disjdes.bmp');
   if digIn[0] then RD0.Picture.loadFromFile('disjoff.bmp') else RD0.Picture.loadFromFile('disjdes.bmp');
 
+  for i:=0 to ComponentCount-1 do
+     begin
+         if (components[i] is TImage) and (components[i].name <> 'Image1') then
+         begin
+         with (components[i] as TImage) do
+            begin
+
+            if digIn[components[i].Tag] then components[i].Picture.loadFromFile('disjoff.bmp') else components[i].Picture.loadFromFile('disjon.bmp');
+
+            end;
+           end;
+         end;
+     end;
   StaticText1.Caption := inttostr(anaIn[0]);
 
   StaticText3.Caption:=formatdatetime('dd/mm/yy hh:mm:ss,z',now);
@@ -272,6 +291,42 @@ begin
   cmd := '2';
   b := ord('2');
   LazSerial1.WriteBuffer(b,1);
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+var i:integer;
+  IM:Timage;
+begin
+  i := 0;
+  listbox1.Items.LoadFromFile('config.txt');
+  while listbox1.Items.Count > 0 do
+  begin
+    IM := Timage.Create(form1);
+    IM.parent := form1;
+    IM.tag := strtoint(listbox1.Items[0]);
+    listbox1.Items.Delete(0);
+
+    IM.top := strtoint(listbox1.Items[0]);
+    listbox1.Items.delete(0);
+
+    IM.left := strtoint(listbox1.Items[0]);
+    listbox1.Items.delete(0);
+
+    state0[i] := listbox1.Items[0];
+    IM.Picture.loadFromFile(state0[0]);
+    listbox1.Items.delete(0);
+
+    stateOn[i] := listbox1.Items[0];
+    listbox1.Items.delete(0);
+
+    stateOff[i] := listbox1.Items[0];
+    listbox1.Items.delete(0);
+
+    IM.Visible:=true;
+
+    i:=i+1;
+    IM.name := 'IM'+inttostr(i);
+  end
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);

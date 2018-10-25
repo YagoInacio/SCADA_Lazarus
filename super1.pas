@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Menus, StdCtrls, Buttons, CheckLst, LazSerial, synaser;
+  Menus, StdCtrls, Buttons, CheckLst, ComCtrls, LazSerial, synaser;
 
 type
 
@@ -26,7 +26,6 @@ type
     btRD1on: TButton;
     btRD1off: TButton;
     btPWMrOn: TButton;
-    Button5: TButton;
     Image1: TImage;
     ListBox1: TListBox;
     MenuItem6: TMenuItem;
@@ -85,8 +84,8 @@ type
      state0: array[0..99] of string;
      stateOn: array[0..99] of string;
      stateOff: array[0..99] of string;
-     supLim: array[0..99] of int;
-     infLim: array[0..99] of int;
+     supLim: array[0..99] of integer;
+     infLim: array[0..99] of integer;
      scale: array[0..99] of real;
   end;
 
@@ -122,17 +121,40 @@ begin
   //if digIn[0] then RD0.Picture.loadFromFile('disjoff.bmp') else RD0.Picture.loadFromFile('disjdes.bmp');
 
   for i:=0 to ComponentCount-1 do
+  begin
+     if (components[i] is TImage) and (components[i].name <> 'Image1') then
      begin
-         if (components[i] is TImage) and (components[i].name <> 'Image1') then
-         begin
-         with (components[i] as TImage) do
-            begin
+     with (components[i] as TImage) do
+        begin
 
-            if digIn[tag] then Picture.loadFromFile('disjoff.bmp') else Picture.loadFromFile('disjon.bmp');
+        if digIn[tag] then Picture.loadFromFile(stateOn[tag]) else Picture.loadFromFile(stateOff[tag]);
 
-            end;
-           end;
-         end;
+        end;
+     end;
+
+     if components[i] is TprogressBar then
+     begin
+     with (components[i] as TprogressBar) do
+        begin
+
+        position := round(scale[tag]*anaIn[tag]); //funcionamento do progressbar (nao sei se a propriedade e' position msm)
+
+        end;
+     end;
+
+     if components[i] is TStaticText then
+     begin
+     with (components[i] as TStaticText) do
+        begin
+        if (anaIN[tag] > supLim[tag]) then
+        text := 'Limite superior atingido!';
+
+        if (anaIN[tag] < infLim[tag]) then
+        text := 'Limite inferior atingido!';
+
+        end;
+     end;
+  end;
   i := 0;
   StaticText1.Caption := inttostr(anaIn[0]);
 
@@ -281,11 +303,27 @@ begin
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
+begin
+
+end;
+
+
+
+procedure TForm1.FormCreate(Sender: TObject);
 var i:integer;
   IM:Timage;
-  PB:TProgressBar;
+  BG:Timage;
+  PB:TprogressBar;
   ST:TStaticText;
 begin
+  cmd := ' ';
+  count := 0;
+
+  //BG := Timage.Create(form1);
+  //BG.parent := form1;
+  //BG.Name := 'Background';
+  //BG.Picture.LoadFromFile('BG.bmp');
+
   i := 0;
   listbox1.Items.LoadFromFile('dig.txt');
   while listbox1.Items.Count > 0 do
@@ -301,14 +339,14 @@ begin
     IM.left := strtoint(listbox1.Items[0]);
     listbox1.Items.delete(0);
 
-    state0[i] := listbox1.Items[0];
-    IM.Picture.loadFromFile(state0[0]);
+    state0[IM.tag] := listbox1.Items[0];
+    IM.Picture.loadFromFile(state0[IM.tag]);
     listbox1.Items.delete(0);
 
-    stateOn[i] := listbox1.Items[0];
+    stateOn[IM.tag] := listbox1.Items[0];
     listbox1.Items.delete(0);
 
-    stateOff[i] := listbox1.Items[0];
+    stateOff[IM.tag] := listbox1.Items[0];
     listbox1.Items.delete(0);
 
     IM.Visible:=true;
@@ -322,6 +360,9 @@ begin
   listbox1.Items.LoadFromFile('ana.txt');
   while listbox1.Items.Count > 0 do
   begin
+    PB := TprogressBar.Create(form1);
+    ST := TStaticText.Create(form1);
+
     PB.parent := form1;
     PB.tag := strtoint(listbox1.Items[0]);
     ST.parent := form1;
@@ -336,33 +377,35 @@ begin
     ST.left := strtoint(listbox1.Items[0]);
     listbox1.Items.delete(0);
 
-    supLim[i] := listbox1.Items[0];
+    supLim[PB.tag] := strtoint(listbox1.Items[0]);
+    PB.Max := supLim[PB.tag];
     listbox1.Items.delete(0);
 
-    infLim[i] := listbox1.Items[0];
+    infLim[PB.tag] := strtoint(listbox1.Items[0]);
+    PB.Min := infLim[PB.tag];
     listbox1.Items.delete(0);
 
-    scale[i] := listbox1.Items[0];
+    scale[PB.tag] := strtofloat(listbox1.Items[0]);
     listbox1.Items.delete(0);
+
+    PB.BarShowText := true;
+    PB.Visible:=true;
+    ST.Visible:=true;
+    ST.Height := 35;
+    ST.Width := 250;
+
+    PB.name := 'PB'+inttostr(i);
+    ST.name := 'ST'+inttostr(i);
 
     i:=i+1;
   end;
-
   Timer2.Enabled := true;
-end;
-
-procedure TForm1.FormCreate(Sender: TObject);
-begin
-     cmd := ' ';
-     count := 0;
 end;
 
 procedure TForm1.Image1Click(Sender: TObject);
 begin
 
 end;
-
-
 
 
 

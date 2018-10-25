@@ -18,9 +18,9 @@ object Form1: TForm1
   Position = poDesktopCenter
   LCLVersion = '1.8.2.0'
   object Image1: TImage
-    Left = 40
+    Left = 0
     Height = 656
-    Top = -16
+    Top = 0
     Width = 832
     OnClick = Image1Click
     Picture.Data = {
@@ -1412,6 +1412,13 @@ object Form1: TForm1
     OnClick = Button5Click
     ParentFont = False
     TabOrder = 16
+  end
+  object ProgressBar1: TProgressBar
+    Left = 59
+    Height = 25
+    Top = 683
+    Width = 125
+    TabOrder = 17
   end
   object MainMenu1: TMainMenu
     left = 816

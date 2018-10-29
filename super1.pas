@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Menus, StdCtrls, Buttons, CheckLst, ComCtrls, LazSerial, synaser;
+  Menus, StdCtrls, Buttons, CheckLst, ComCtrls, LazSerial, synaser, Types;
 
 type
 
@@ -26,8 +26,8 @@ type
     btRD1on: TButton;
     btRD1off: TButton;
     btPWMrOn: TButton;
-    Image1: TImage;
     ListBox1: TListBox;
+    ListBox2: TListBox;
     MenuItem6: TMenuItem;
     PopupMenu1: TPopupMenu;
     LazSerial1: TLazSerial;
@@ -37,10 +37,10 @@ type
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
-    StaticText1: TStaticText;
     StaticText3: TStaticText;
     Timer1: TTimer;
     Timer2: TTimer;
+    Timer3: TTimer;
     procedure BitBtn1Click(Sender: TObject);
     procedure btPWMrOffClick(Sender: TObject);
     procedure btRD0Click(Sender: TObject);
@@ -61,16 +61,22 @@ type
     procedure LazSerial1Status(Sender: TObject; Reason: THookSerialReason;
       const Value: string);
     procedure ListBox1Click(Sender: TObject);
+    procedure ListBox2Click(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
+    procedure ProgressBar1ContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
+    procedure StaticText1Click(Sender: TObject);
     procedure StaticText3Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure enableButtons();
     procedure Timer2Timer(Sender: TObject);
+    procedure Timer3Timer(Sender: TObject);
     procedure updateScreen();
+    procedure readlisbox2command();
   private
 
   public
@@ -122,12 +128,13 @@ begin
 
   for i:=0 to ComponentCount-1 do
   begin
-     if (components[i] is TImage) and (components[i].name <> 'Image1') then
+     if (components[i] is TImage) and (components[i].name <> 'Background') then
      begin
      with (components[i] as TImage) do
         begin
-
+        bitbtn1.Caption:=name;
         if digIn[tag] then Picture.loadFromFile(stateOn[tag]) else Picture.loadFromFile(stateOff[tag]);
+
 
         end;
      end;
@@ -137,34 +144,175 @@ begin
      with (components[i] as TprogressBar) do
         begin
 
-        position := round(scale[tag]*anaIn[tag]); //funcionamento do progressbar (nao sei se a propriedade e' position msm)
+        position := round(scale[tag]*anaIn[tag]);
 
         end;
      end;
 
-     if components[i] is TStaticText then
+     if (components[i] is TStaticText) and (components[i].name <> 'StaticText3') then
      begin
      with (components[i] as TStaticText) do
         begin
-        if (anaIN[tag] > supLim[tag]) then
-        text := 'Limite superior atingido!';
-
-        if (anaIN[tag] < infLim[tag]) then
-        text := 'Limite inferior atingido!';
-
+        if (anaIN[tag]*scale[tag] > supLim[tag]) then
+        text := 'Limite superior atingido!'
+        else
+        begin
+          if (anaIN[tag]*scale[tag] < infLim[tag]) then
+          text := 'Limite inferior atingido!'
+          else
+          text := inttostr(round(scale[tag]*anaIn[tag]));
+        end;
         end;
      end;
   end;
   i := 0;
-  StaticText1.Caption := inttostr(anaIn[0]);
 
   StaticText3.Caption:=formatdatetime('dd/mm/yy hh:mm:ss,z',now);
+end;
+
+procedure TForm1.readlisbox2command();
+var b:byte;
+begin
+     if listbox2.items.count > 0 then
+     begin
+
+       Timer1.Enabled := false;
+       Timer2.Enabled := false;
+
+     while listbox2.Items.Count > 0 do
+     begin
+           case listbox2.items[0]  of
+          'PWM+' :
+          begin
+            cmd := '+';
+            b := ord('+');
+            LazSerial1.WriteBuffer(b,1);
+            listbox2.Items.delete(0);
+          end;
+
+          'PWM-' :
+          begin
+            cmd := '-';
+            b := ord('-');
+            LazSerial1.WriteBuffer(b,1);
+            listbox2.Items.delete(0);
+          end;
+
+          'RD1 - ON' :
+          begin
+            cmd := 'l';
+            b := ord('l');
+            LazSerial1.WriteBuffer(b,1);
+            listbox2.Items.delete(0);
+          end;
+
+          'RD1 - OFF' :
+          begin
+            cmd := 'd';
+            b := ord('d');
+            LazSerial1.WriteBuffer(b,1);
+            listbox2.Items.delete(0);
+          end;
+
+          'PWMr - ON' :
+          begin
+            cmd := '2';
+            b := ord('2');
+            LazSerial1.WriteBuffer(b,1);
+            listbox2.Items.delete(0);
+          end;
+
+          'PWMr - OFF' :
+          begin
+            cmd := '1';
+            b := ord('1');
+            LazSerial1.WriteBuffer(b,1);
+            listbox2.Items.delete(0);
+          end;
+
+          'RD0 - ON/OFF' :
+          begin
+            listbox2.Items.delete(0);
+            b:=ord('o');
+            LazSerial1.WriteBuffer(b,1);
+          end;
+
+
+         // if listbox2.Items[0]= 'PWM+' then
+         // begin
+         //   cmd := '+';
+         //   b := ord('+');
+         //   LazSerial1.WriteBuffer(b,1);
+         //   listbox2.Items.delete(0);
+         // end;
+         //
+         // else if listbox2.Items[0]= 'PWM-' then
+         // begin
+         //   cmd := '-';
+         //   b := ord('-');
+         //   LazSerial1.WriteBuffer(b,1);
+         //   listbox2.Items.delete(0);
+         // end;
+         //
+         //else if listbox2.Items[0]= 'RD1 - ON' then
+         // begin
+         //   cmd := 'l';
+         //   b := ord('l');
+         //   LazSerial1.WriteBuffer(b,1);
+         //   listbox2.Items.delete(0);
+         // end;
+         //
+         // if listbox2.Items[0]= 'RD1 - OFF' then
+         // begin
+         //   cmd := 'd';
+         //   b := ord('d');
+         //   LazSerial1.WriteBuffer(b,1);
+         //   listbox2.Items.delete(0);
+         // end;
+         //
+         // if listbox2.Items[0]= 'PWMr - ON' then
+         // begin
+         //   cmd := '2';
+         //   b := ord('2');
+         //   LazSerial1.WriteBuffer(b,1);
+         //   listbox2.Items.delete(0);
+         // end;
+         //
+         // if listbox2.Items[0]= 'PWMr - OFF' then
+         // begin
+         //   cmd := '1';
+         //   b := ord('1');
+         //   LazSerial1.WriteBuffer(b,1);
+         //   listbox2.Items.delete(0);
+         // end;
+         //
+         // if listbox2.Items[0]= 'RD0 - ON/OFF' then
+         // begin
+         //   listbox2.Items.delete(0);
+         //   b:=ord('o');
+         //   LazSerial1.WriteBuffer(b,1);
+         // end;
+           end;
+
+
+      end;
+
+      Timer1.Enabled := true;
+      Timer2.Enabled := true;
+
+      end;
+
 end;
 
 
 procedure TForm1.Timer2Timer(Sender: TObject);
 begin
   updateScreen();
+end;
+
+procedure TForm1.Timer3Timer(Sender: TObject);
+begin
+   readlisbox2command();
 end;
 
 procedure TForm1.enableButtons(); //enable the buttons (called when connection is open)
@@ -191,8 +339,8 @@ end;
 procedure TForm1.btRD0Click(Sender: TObject);
 var b:byte;
 begin
-  b:=ord('o');
-  LazSerial1.WriteBuffer(b,1);
+  ListBox2.Items.Add('RD0 - ON/OFF');
+
 end;
 
 procedure TForm1.btTela2Click(Sender: TObject);
@@ -213,9 +361,8 @@ end;
 procedure TForm1.btPWMrOffClick(Sender: TObject);
 var b:byte;
 begin
-  cmd := '1';
-  b := ord('1');
-  LazSerial1.WriteBuffer(b,1);
+  ListBox2.Items.Add('PWMr - OFF');
+
 end;
 
 procedure TForm1.BitBtn1Click(Sender: TObject);
@@ -259,47 +406,41 @@ begin
   cmd := 'q';
   b:=ord('q');
   LazSerial1.WriteBuffer(b,1);
+
 end;
 
 procedure TForm1.btPWMmaisClick(Sender: TObject);
-var b:byte;
+
 begin
-  cmd := '+';
-  b := ord('+');
-  LazSerial1.WriteBuffer(b,1);
+  ListBox2.Items.Add('PWM+');
 end;
 
 procedure TForm1.btPWMmenosClick(Sender: TObject);
 var b:byte;
 begin
-  cmd := '-';
-  b := ord('-');
-  LazSerial1.WriteBuffer(b,1);
+
+  ListBox2.Items.Add('PWM-');
 
 end;
 
 procedure TForm1.btRD1onClick(Sender: TObject);
 var b:byte;
 begin
-  cmd := 'l';
-  b := ord('l');
-  LazSerial1.WriteBuffer(b,1);
+  ListBox2.Items.Add('RD1 - ON');
 end;
 
 procedure TForm1.btRD1offClick(Sender: TObject);
 var b:byte;
 begin
-  cmd := 'd';
-  b := ord('d');
-  LazSerial1.WriteBuffer(b,1);
+  ListBox2.Items.Add('RD1 - OFF');
+
 end;
 
 procedure TForm1.btPWMrOnClick(Sender: TObject);
 var b:byte;
 begin
-  cmd := '2';
-  b := ord('2');
-  LazSerial1.WriteBuffer(b,1);
+  ListBox2.Items.Add('PWMr - ON');
+
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
@@ -319,10 +460,11 @@ begin
   cmd := ' ';
   count := 0;
 
-  //BG := Timage.Create(form1);
-  //BG.parent := form1;
-  //BG.Name := 'Background';
-  //BG.Picture.LoadFromFile('BG.bmp');
+  BG := Timage.Create(form1);
+  BG.parent := form1;
+  BG.Name := 'Background';
+  BG.Picture.LoadFromFile('BG.bmp');
+  BG.AutoSize:=True;
 
   i := 0;
   listbox1.Items.LoadFromFile('dig.txt');
@@ -462,6 +604,11 @@ begin
 
 end;
 
+procedure TForm1.ListBox2Click(Sender: TObject);
+begin
+
+end;
+
 
 procedure TForm1.MenuItem4Click(Sender: TObject);
 begin
@@ -476,6 +623,16 @@ end;
 procedure TForm1.MenuItem6Click(Sender: TObject);
 begin
   Form2.Show;
+end;
+
+procedure TForm1.ProgressBar1ContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+begin
+  end;
+
+procedure TForm1.StaticText1Click(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.StaticText3Click(Sender: TObject);

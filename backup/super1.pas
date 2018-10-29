@@ -154,13 +154,25 @@ begin
      with (components[i] as TStaticText) do
         begin
         if (anaIN[tag]*scale[tag] > supLim[tag]) then
-        text := 'Limite superior atingido!'
+        begin
+          font.Color:=clRed;
+          text := 'Limite superior atingido!';
+        end
+
         else
         begin
           if (anaIN[tag]*scale[tag] < infLim[tag]) then
-          text := 'Limite inferior atingido!'
+          begin
+             font.Color:=clRed;
+             text := 'Limite inferior atingido!';
+          end
+
           else
-          text := inttostr(round(scale[tag]*anaIn[tag]));
+          begin
+               font.Color:=clBlack;
+               text := inttostr(round(scale[tag]*anaIn[tag]));
+          end;
+
         end;
         end;
      end;

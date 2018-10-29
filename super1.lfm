@@ -1,11 +1,11 @@
 object Form1: TForm1
   Left = 631
-  Height = 778
+  Height = 557
   Top = 108
-  Width = 908
+  Width = 934
   Caption = 'Form1'
-  ClientHeight = 753
-  ClientWidth = 908
+  ClientHeight = 532
+  ClientWidth = 934
   DesignTimePPI = 120
   Font.CharSet = ANSI_CHARSET
   Font.Height = -20
@@ -18,9 +18,9 @@ object Form1: TForm1
   Position = poDesktopCenter
   LCLVersion = '1.8.2.0'
   object btRD0: TButton
-    Left = 680
+    Left = 735
     Height = 32
-    Top = 408
+    Top = 251
     Width = 94
     Caption = 'RD0- ON/OFF'
     Enabled = False
@@ -34,9 +34,9 @@ object Form1: TForm1
     TabOrder = 0
   end
   object Button2: TButton
-    Left = 208
+    Left = 224
     Height = 25
-    Top = 672
+    Top = 664
     Width = 75
     Caption = 'Status "J"'
     Font.CharSet = ANSI_CHARSET
@@ -50,9 +50,9 @@ object Form1: TForm1
     Visible = False
   end
   object Button3: TButton
-    Left = 376
+    Left = 392
     Height = 32
-    Top = 706
+    Top = 698
     Width = 112
     Caption = 'Analog'
     Enabled = False
@@ -67,9 +67,9 @@ object Form1: TForm1
     Visible = False
   end
   object Button4: TButton
-    Left = 568
+    Left = 584
     Height = 31
-    Top = 664
+    Top = 656
     Width = 94
     Caption = 'Status "D"'
     Font.CharSet = ANSI_CHARSET
@@ -83,9 +83,9 @@ object Form1: TForm1
     Visible = False
   end
   object btPWMmenos: TButton
-    Left = 680
+    Left = 53
     Height = 31
-    Top = 144
+    Top = 199
     Width = 94
     Caption = 'PWM-'
     Enabled = False
@@ -99,9 +99,9 @@ object Form1: TForm1
     TabOrder = 4
   end
   object btRD1on: TButton
-    Left = 680
+    Left = 304
     Height = 31
-    Top = 200
+    Top = 75
     Width = 94
     Caption = 'RD1 - ON'
     Enabled = False
@@ -115,9 +115,9 @@ object Form1: TForm1
     TabOrder = 5
   end
   object btPWMmais: TButton
-    Left = 680
+    Left = 122
     Height = 31
-    Top = 80
+    Top = 39
     Width = 94
     Caption = 'PWM+'
     Enabled = False
@@ -131,9 +131,9 @@ object Form1: TForm1
     TabOrder = 6
   end
   object btRD1off: TButton
-    Left = 680
+    Left = 205
     Height = 31
-    Top = 256
+    Top = 249
     Width = 94
     Caption = 'RD1 - OFF'
     Enabled = False
@@ -147,9 +147,9 @@ object Form1: TForm1
     TabOrder = 7
   end
   object btPWMrOn: TButton
-    Left = 680
+    Left = 652
     Height = 31
-    Top = 304
+    Top = 39
     Width = 94
     Caption = 'PWMr - ON'
     Enabled = False
@@ -163,9 +163,9 @@ object Form1: TForm1
     TabOrder = 8
   end
   object btPWMrOff: TButton
-    Left = 680
+    Left = 583
     Height = 31
-    Top = 352
+    Top = 198
     Width = 94
     Caption = 'PWMr - OFF'
     Enabled = False
@@ -179,9 +179,9 @@ object Form1: TForm1
     TabOrder = 9
   end
   object btTela2: TButton
-    Left = 743
+    Left = 759
     Height = 31
-    Top = 584
+    Top = 576
     Width = 94
     Caption = 'btTela2'
     Font.CharSet = ANSI_CHARSET
@@ -195,7 +195,7 @@ object Form1: TForm1
     Visible = False
   end
   object StaticText3: TStaticText
-    Left = 272
+    Left = 296
     Height = 56
     Top = 480
     Width = 265
@@ -211,9 +211,9 @@ object Form1: TForm1
     TabOrder = 11
   end
   object BitBtn1: TBitBtn
-    Left = 768
+    Left = 784
     Height = 38
-    Top = 648
+    Top = 640
     Width = 94
     Caption = 'Backup'
     Font.CharSet = ANSI_CHARSET
@@ -227,9 +227,9 @@ object Form1: TForm1
     Visible = False
   end
   object ListBox1: TListBox
-    Left = 16
+    Left = 24
     Height = 120
-    Top = 528
+    Top = 592
     Width = 173
     Font.CharSet = ANSI_CHARSET
     Font.Height = -15
@@ -243,9 +243,9 @@ object Form1: TForm1
     Visible = False
   end
   object Button1: TButton
-    Left = 608
+    Left = 624
     Height = 31
-    Top = 592
+    Top = 584
     Width = 94
     Caption = 'Cria'
     Font.CharSet = ANSI_CHARSET

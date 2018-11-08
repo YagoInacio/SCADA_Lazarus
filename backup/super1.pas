@@ -55,6 +55,7 @@ type
     procedure btRD1offClick(Sender: TObject);
     procedure btPWMrOnClick(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure FormClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure LazSerial1RxData(Sender: TObject);
@@ -250,61 +251,7 @@ begin
           end;
 
 
-         // if listbox2.Items[0]= 'PWM+' then
-         // begin
-         //   cmd := '+';
-         //   b := ord('+');
-         //   LazSerial1.WriteBuffer(b,1);
-         //   listbox2.Items.delete(0);
-         // end;
-         //
-         // else if listbox2.Items[0]= 'PWM-' then
-         // begin
-         //   cmd := '-';
-         //   b := ord('-');
-         //   LazSerial1.WriteBuffer(b,1);
-         //   listbox2.Items.delete(0);
-         // end;
-         //
-         //else if listbox2.Items[0]= 'RD1 - ON' then
-         // begin
-         //   cmd := 'l';
-         //   b := ord('l');
-         //   LazSerial1.WriteBuffer(b,1);
-         //   listbox2.Items.delete(0);
-         // end;
-         //
-         // if listbox2.Items[0]= 'RD1 - OFF' then
-         // begin
-         //   cmd := 'd';
-         //   b := ord('d');
-         //   LazSerial1.WriteBuffer(b,1);
-         //   listbox2.Items.delete(0);
-         // end;
-         //
-         // if listbox2.Items[0]= 'PWMr - ON' then
-         // begin
-         //   cmd := '2';
-         //   b := ord('2');
-         //   LazSerial1.WriteBuffer(b,1);
-         //   listbox2.Items.delete(0);
-         // end;
-         //
-         // if listbox2.Items[0]= 'PWMr - OFF' then
-         // begin
-         //   cmd := '1';
-         //   b := ord('1');
-         //   LazSerial1.WriteBuffer(b,1);
-         //   listbox2.Items.delete(0);
-         // end;
-         //
-         // if listbox2.Items[0]= 'RD0 - ON/OFF' then
-         // begin
-         //   listbox2.Items.delete(0);
-         //   b:=ord('o');
-         //   LazSerial1.WriteBuffer(b,1);
-         // end;
-           end;
+          end;
 
 
       end;
@@ -422,13 +369,19 @@ begin
 end;
 
 procedure TForm1.btPWMmaisClick(Sender: TObject);
-
+var s: string;
 begin
-  ListBox2.Items.Add('PWM+');
+  //ListBox2.Items.Add('PWM+');
+
+  if sender is Timage then s:= (sender as timage).name;
+  if sender is tbutton then s:=(sender as tbutton).name;
+  form2.label1.caption := 'Deseja enviar o comendo de ' + s + '? ';
+  form2.show();
+
+
 end;
 
 procedure TForm1.btPWMmenosClick(Sender: TObject);
-var b:byte;
 begin
 
   ListBox2.Items.Add('PWM-');
@@ -436,26 +389,28 @@ begin
 end;
 
 procedure TForm1.btRD1onClick(Sender: TObject);
-var b:byte;
 begin
   ListBox2.Items.Add('RD1 - ON');
 end;
 
 procedure TForm1.btRD1offClick(Sender: TObject);
-var b:byte;
 begin
-  ListBox2.Items.Add('RD1 - OFF');
+ListBox2.Items.Add('RD1 - OFF');
 
 end;
 
 procedure TForm1.btPWMrOnClick(Sender: TObject);
-var b:byte;
 begin
   ListBox2.Items.Add('PWMr - ON');
 
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.FormClick(Sender: TObject);
 begin
 
 end;

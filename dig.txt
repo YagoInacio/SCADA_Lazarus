@@ -4,12 +4,16 @@
 disjdes.bmp
 disjon.bmp
 disjoff.bmp
+0
+1
 1
 360
 225
 disjdes.bmp
 disjon.bmp
 disjoff.bmp
+0
+1
 2
 385
 225

@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 631
-  Height = 574
-  Top = 108
+  Left = 399
+  Height = 557
+  Top = 189
   Width = 934
   Caption = 'Form1'
-  ClientHeight = 549
+  ClientHeight = 532
   ClientWidth = 934
   DesignTimePPI = 120
   Font.CharSet = ANSI_CHARSET
@@ -14,6 +14,7 @@ object Form1: TForm1
   Font.Quality = fqDraft
   Font.Style = [fsBold]
   Menu = MainMenu1
+  OnClick = btPWMmaisClick
   OnCreate = FormCreate
   Position = poDesktopCenter
   LCLVersion = '1.8.2.0'
@@ -29,7 +30,7 @@ object Form1: TForm1
     Font.Name = 'Nirmala UI'
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
-    OnClick = btRD0Click
+    OnClick = btPWMmaisClick
     ParentFont = False
     TabOrder = 0
   end
@@ -94,7 +95,7 @@ object Form1: TForm1
     Font.Name = 'Nirmala UI'
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
-    OnClick = btPWMmenosClick
+    OnClick = btPWMmaisClick
     ParentFont = False
     TabOrder = 4
   end
@@ -110,7 +111,7 @@ object Form1: TForm1
     Font.Name = 'Nirmala UI'
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
-    OnClick = btRD1onClick
+    OnClick = btPWMmaisClick
     ParentFont = False
     TabOrder = 5
   end
@@ -142,7 +143,7 @@ object Form1: TForm1
     Font.Name = 'Nirmala UI'
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
-    OnClick = btRD1offClick
+    OnClick = btPWMmaisClick
     ParentFont = False
     TabOrder = 7
   end
@@ -158,7 +159,7 @@ object Form1: TForm1
     Font.Name = 'Nirmala UI'
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
-    OnClick = btPWMrOnClick
+    OnClick = btPWMmaisClick
     ParentFont = False
     TabOrder = 8
   end
@@ -174,7 +175,7 @@ object Form1: TForm1
     Font.Name = 'Nirmala UI'
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
-    OnClick = btPWMrOffClick
+    OnClick = btPWMmaisClick
     ParentFont = False
     TabOrder = 9
   end
@@ -259,9 +260,9 @@ object Form1: TForm1
     Visible = False
   end
   object ListBox2: TListBox
-    Left = 680
+    Left = 708
     Height = 116
-    Top = 448
+    Top = 400
     Width = 170
     ItemHeight = 0
     OnClick = ListBox2Click
@@ -269,8 +270,8 @@ object Form1: TForm1
     Visible = False
   end
   object MainMenu1: TMainMenu
-    left = 816
-    top = 176
+    left = 888
+    top = 168
     object MenuItem1: TMenuItem
       Caption = 'Sair'
       OnClick = MenuItem1Click
@@ -303,19 +304,19 @@ object Form1: TForm1
     RcvLineCRLF = False
     OnRxData = LazSerial1RxData
     OnStatus = LazSerial1Status
-    left = 816
-    top = 16
+    left = 888
+    top = 8
   end
   object Timer1: TTimer
     Enabled = False
     Interval = 100
     OnTimer = Timer1Timer
-    left = 816
-    top = 96
+    left = 888
+    top = 88
   end
   object PopupMenu1: TPopupMenu
-    left = 816
-    top = 264
+    left = 888
+    top = 256
     object MenuItem6: TMenuItem
       Caption = 'Chamar tela 2'
       OnClick = MenuItem6Click
@@ -325,12 +326,12 @@ object Form1: TForm1
     Enabled = False
     Interval = 500
     OnTimer = Timer2Timer
-    left = 816
-    top = 344
+    left = 888
+    top = 336
   end
   object Timer3: TTimer
     OnTimer = Timer3Timer
-    left = 816
-    top = 416
+    left = 888
+    top = 408
   end
 end

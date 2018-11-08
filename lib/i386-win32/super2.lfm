@@ -1,21 +1,45 @@
 object Form2: TForm2
-  Left = 406
-  Height = 300
-  Top = 224
-  Width = 400
+  Left = 648
+  Height = 380
+  Top = 175
+  Width = 606
   Caption = 'Form2'
-  ClientHeight = 300
-  ClientWidth = 400
+  ClientHeight = 380
+  ClientWidth = 606
   DesignTimePPI = 120
   FormStyle = fsStayOnTop
   Position = poDesktopCenter
   LCLVersion = '1.8.2.0'
   object Button1: TButton
-    Left = 163
+    Left = 120
     Height = 31
-    Top = 58
+    Top = 264
     Width = 94
-    Caption = 'Button1'
+    Caption = 'Sim'
     TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 344
+    Height = 31
+    Top = 264
+    Width = 94
+    Caption = 'Não'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+  object Label1: TLabel
+    Left = 40
+    Height = 36
+    Top = 106
+    Width = 87
+    Caption = 'Label1'
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -27
+    Font.Name = '@Arial Unicode MS'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
   end
 end

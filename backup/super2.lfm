@@ -1,13 +1,14 @@
 object Form2: TForm2
-  Left = 648
+  Left = 491
   Height = 380
-  Top = 175
+  Top = 132
   Width = 606
   Caption = 'Form2'
   ClientHeight = 380
   ClientWidth = 606
   DesignTimePPI = 120
   FormStyle = fsStayOnTop
+  OnCreate = FormCreate
   Position = poDesktopCenter
   LCLVersion = '1.8.2.0'
   object Button1: TButton
@@ -16,6 +17,7 @@ object Form2: TForm2
     Top = 264
     Width = 94
     Caption = 'Sim'
+    OnClick = Button1Click
     TabOrder = 0
   end
   object Button2: TButton

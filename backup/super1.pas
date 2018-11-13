@@ -28,6 +28,7 @@ type
     btPWMrOn: TButton;
     ListBox1: TListBox;
     ListBox2: TListBox;
+    ListBox3: TListBox;
     MenuItem6: TMenuItem;
     PopupMenu1: TPopupMenu;
     LazSerial1: TLazSerial;
@@ -78,6 +79,7 @@ type
     procedure Timer3Timer(Sender: TObject);
     procedure updateScreen();
     procedure readlisbox2command();
+
   private
 
   public
@@ -94,11 +96,20 @@ type
      supLim: array[0..99] of integer;
      infLim: array[0..99] of integer;
      scale: array[0..99] of real;
+     command: array [0..99] of boolean;
+     stateCommandOn: array[0..99] of char;
+     stateCommandOff: array[0..99] of char;
+
+
   end;
 
 var
   Form1: TForm1;
-
+      stateonon: array [0..99] of string;
+      stateoffoff: array [0..99] of string;
+      Tagclick: integer;
+      NameClick: string;
+      stateclick:string;
 implementation
 
 uses super2;
@@ -183,6 +194,7 @@ begin
   StaticText3.Caption:=formatdatetime('dd/mm/yy hh:mm:ss,z',now);
 end;
 
+
 procedure TForm1.readlisbox2command();
 var b:byte;
 begin
@@ -246,6 +258,7 @@ begin
           'RD0 - ON/OFF' :
           begin
             listbox2.Items.delete(0);
+            cmd := 'o';
             b:=ord('o');
             LazSerial1.WriteBuffer(b,1);
           end;
@@ -373,11 +386,22 @@ var s: string;
 begin
   //ListBox2.Items.Add('PWM+');
 
-  if sender is Timage then s:= (sender as timage).name;
-  if sender is tbutton then s:=(sender as tbutton).name;
-  form2.label1.caption := 'Deseja enviar o comendo de ' + s + '? ';
-  form2.show();
+  if sender is Timage then
+     begin
+          s:= (sender as timage).Hint;
+          tagclick := (sender as Timage).tag;
+          Nameclick := 'null';
 
+
+     end;
+  if sender is tbutton then
+     begin
+     s:=(sender as tbutton).Hint;
+     Nameclick := (sender as tbutton).name ;
+     tagclick :=99999999;
+     end;
+  form2.label1.caption := 'Deseja enviar o comando de ' + s + '? ';
+  form2.show();
 
 end;
 
@@ -423,6 +447,7 @@ var i:integer;
   BG:Timage;
   PB:TprogressBar;
   ST:TStaticText;
+
 begin
   cmd := ' ';
   count := 0;
@@ -435,6 +460,7 @@ begin
 
   i := 0;
   listbox1.Items.LoadFromFile('dig.txt');
+  listbox3.items.LoadFromFile('ledcomandtag.txt');
   while listbox1.Items.Count > 0 do
   begin
     IM := Timage.Create(form1);
@@ -458,10 +484,29 @@ begin
     stateOff[IM.tag] := listbox1.Items[0];
     listbox1.Items.delete(0);
 
-    IM.Visible:=true;
+    command[IM.tag] := StrToBool(listbox1.items[0]);
+    listbox1.items.delete(0);
 
+    stateCommandOn[IM.tag] := (listbox1.items[0])[1];
+    listbox1.items.delete(0);
+
+    stateCommandOff[IM.tag] := (listbox1.Items[0])[1];
+    listbox1.items.delete(0);
+
+    IM.hint := (listbox1.items[0]);
+    listbox1.items.delete(0);
+
+    If command[IM.tag] then
+    Begin
+         IM.onclick := btPWMmais.onclick;
+    end;
+
+
+    IM.Visible:=true;
     IM.name := 'IM'+inttostr(i);
     i:=i+1;
+
+
 
   end;
 
@@ -510,6 +555,7 @@ begin
   end;
   Timer2.Enabled := true;
 end;
+
 
 procedure TForm1.Image1Click(Sender: TObject);
 begin

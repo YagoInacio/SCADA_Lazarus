@@ -7,7 +7,7 @@ disjoff.bmp
 1
 o
 o
-Led 0
+RD0 On/Off
 1
 360
 225
@@ -17,34 +17,34 @@ disjoff.bmp
 1
 d
 l
-Led 1
+RD1 On/Off
 2
 385
 225
 disjdes.bmp
 disjon.bmp
 disjoff.bmp
-1
-+
-+
-PWM +
+0
+0
+0
+Led
 3
 410
 225
 disjdes.bmp
 disjon.bmp
 disjoff.bmp
-1
+0
 -
 -
-PWM -
+PWM +
 4
 435
 225
 disjdes.bmp
 disjon.bmp
 disjoff.bmp
-1
+0
 1
 1
 PWMr OFF
@@ -54,7 +54,7 @@ PWMr OFF
 disjdes.bmp
 disjon.bmp
 disjoff.bmp
-1
+0
 2
 2
 PWMr ON

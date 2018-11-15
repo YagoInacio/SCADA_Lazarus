@@ -14,21 +14,14 @@ type
 
   TForm1 = class(TForm)
     BitBtn1: TBitBtn;
-    btRD0: TButton;
-    btPWMrOff: TButton;
     btTela2: TButton;
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
     btPWMmais: TButton;
-    btPWMmenos: TButton;
-    btRD1on: TButton;
-    btRD1off: TButton;
-    btPWMrOn: TButton;
     ListBox1: TListBox;
     ListBox2: TListBox;
-    ListBox3: TListBox;
     MenuItem6: TMenuItem;
     PopupMenu1: TPopupMenu;
     LazSerial1: TLazSerial;
@@ -99,6 +92,7 @@ type
      command: array [0..99] of boolean;
      stateCommandOn: array[0..99] of char;
      stateCommandOff: array[0..99] of char;
+     buttonimg: array[0..99] of string;
 
 
   end;
@@ -120,6 +114,7 @@ uses super2;
 
 procedure TForm1.updateScreen();   //responsible for updating the screen with no relation to the comunication protocol (called by the timer)
 var i:integer;
+    n:string;
 begin
   //if digIn[15] then RJ7.Picture.loadFromFile('disjoff.bmp') else RJ7.Picture.loadFromFile('disjdes.bmp');
   //if digIn[14] then RJ6.Picture.loadFromFile('disjoff.bmp') else RJ6.Picture.loadFromFile('disjdes.bmp');
@@ -140,16 +135,16 @@ begin
 
   for i:=0 to ComponentCount-1 do
   begin
-     if (components[i] is TImage) and (components[i].name <> 'Background') then
+
+     if (components[i] is TImage) and (components[i].name <> 'Background' ) and ( pos('BT',components[i].name) = 0) then
      begin
      with (components[i] as TImage) do
         begin
-        bitbtn1.Caption:=name;
+        //bitbtn1.Caption:=name;
         if digIn[tag] then Picture.loadFromFile(stateOn[tag]) else Picture.loadFromFile(stateOff[tag]);
-
-
         end;
-     end;
+        end;
+
 
      if components[i] is TprogressBar then
      begin
@@ -188,7 +183,7 @@ begin
         end;
         end;
      end;
-  end;
+ end;
   i := 0;
 
   StaticText3.Caption:=formatdatetime('dd/mm/yy hh:mm:ss,z',now);
@@ -289,13 +284,7 @@ end;
 
 procedure TForm1.enableButtons(); //enable the buttons (called when connection is open)
 begin
-  btRD0.Enabled := true;
-  btRD1on.Enabled := true;
-  btRD1off.Enabled := true;
   btPWMmais.Enabled := true;
-  btPWMmenos.Enabled := true;
-  btPWMrOn.Enabled := true;
-  btPWMrOff.Enabled := true;
 end;
 
 procedure TForm1.MenuItem3Click(Sender: TObject);
@@ -447,6 +436,7 @@ var i:integer;
   BG:Timage;
   PB:TprogressBar;
   ST:TStaticText;
+  BT:TImage;
 
 begin
   cmd := ' ';
@@ -552,7 +542,56 @@ begin
 
     i:=i+1;
   end;
-  Timer2.Enabled := true;
+
+  i:=0;
+  listbox1.Items.LoadFromFile('button.txt');
+  while listbox1.Items.count >0 do
+  begin
+    BT:= Timage.create(form1);
+    BT.parent:= form1;
+
+    BT.tag := strtoint(listbox1.Items[0]);
+    listbox1.Items.Delete(0);
+
+    BT.top := strtoint(listbox1.Items[0]);
+    listbox1.Items.delete(0);
+
+    BT.left := strtoint(listbox1.Items[0]);
+    listbox1.Items.delete(0);
+
+    buttonimg[BT.tag] := listbox1.Items[0];
+    BT.Picture.loadFromFile(buttonimg[BT.tag]);
+    listbox1.Items.delete(0);
+
+    command[BT.tag] := StrToBool(listbox1.items[0]);
+    listbox1.items.delete(0);
+
+    stateCommandOn[BT.tag] := (listbox1.items[0])[1];
+    listbox1.items.delete(0);
+
+    stateCommandOff[BT.tag] := (listbox1.Items[0])[1];
+    listbox1.items.delete(0);
+
+    BT.hint := (listbox1.items[0]);
+    listbox1.items.delete(0);
+
+    If command[BT.tag] then
+    Begin
+         BT.onclick := btPWMmais.onclick;
+    end;
+
+
+    BT.Visible:=true;
+    BT.name := 'BT'+inttostr(i);
+    i:=i+1;
+
+
+
+
+
+  end;
+
+  //Timer2.Enabled := true;
 end;
 
 
@@ -607,8 +646,13 @@ end;
 procedure TForm1.LazSerial1Status(Sender: TObject; Reason: THookSerialReason;
   const Value: string);
 begin
-  if reason = HR_Connect then enableButtons();  //the buttons are disabledd by default. Whenever the connection port is opened, the buttons are enabled
+  if reason = HR_Connect then
+  begin
+   enableButtons();  //the buttons are disabledd by default. Whenever the connection port is opened, the buttons are enabled
   Timer1.Enabled := true;
+  Timer2.Enabled := true;
+  end;
+
 end;
 
 procedure TForm1.ListBox1Click(Sender: TObject);

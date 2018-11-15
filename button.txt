@@ -1,0 +1,32 @@
+0
+50
+400
+PWMmais.bmp
+1
++
++
+PWM+
+1
+105
+400
+PWMmenos.bmp
+1
+-
+-
+PWM-
+2
+160
+400
+PWMrON.bmp
+1
+2
+2
+PWMr On
+3
+215
+400
+PWMrOFF.bmp
+1
+1
+1
+PWMr Off

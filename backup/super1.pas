@@ -136,11 +136,11 @@ begin
   for i:=0 to ComponentCount-1 do
   begin
 
-     if (components[i] is TImage) and (components[i].name <> 'Background' ) and ( pos('BT',components[i].name) >= 1) then
+     if (components[i] is TImage) and (components[i].name <> 'Background' ) and ( pos('BT',components[i].name) = 0) then
      begin
      with (components[i] as TImage) do
         begin
-        //bitbtn1.Caption:=name;
+        bitbtn1.Caption:=name;
         if digIn[tag] then Picture.loadFromFile(stateOn[tag]) else Picture.loadFromFile(stateOff[tag]);
         end;
         end;

@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="9"/>
         <CursorPos X="147" Y="11"/>
-        <UsageCount Value="173"/>
+        <UsageCount Value="174"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -20,10 +20,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="119"/>
-        <CursorPos X="114" Y="139"/>
-        <FoldState Value=" T8iW21 T3lK0'03A161B piXsX07 T1v60Z011L"/>
-        <UsageCount Value="173"/>
+        <TopLine Value="187"/>
+        <CursorPos X="36" Y="592"/>
+        <FoldState Value=" T8iW21 T3lK0'03A161B T1v60Z011r"/>
+        <UsageCount Value="174"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -35,8 +35,8 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
         <TopLine Value="50"/>
-        <CursorPos X="11" Y="67"/>
-        <UsageCount Value="168"/>
+        <CursorPos Y="70"/>
+        <UsageCount Value="169"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
@@ -51,8 +51,8 @@
       <Unit4>
         <Filename Value="C:\lazarus\lcl\include\control.inc"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="3409"/>
-        <CursorPos Y="3427"/>
+        <TopLine Value="2849"/>
+        <CursorPos Y="2866"/>
         <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit4>
@@ -125,123 +125,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="super1.pas"/>
-        <Caret Line="380" Column="3" TopLine="377"/>
+        <Caret Line="137" Column="119" TopLine="120"/>
       </Position1>
       <Position2>
         <Filename Value="super1.pas"/>
-        <Caret Line="563" Column="9" TopLine="543"/>
+        <Caret Line="569" Column="44" TopLine="547"/>
       </Position2>
       <Position3>
         <Filename Value="super1.pas"/>
-        <Caret Line="543" Column="6" TopLine="495"/>
+        <Caret Line="137" Column="124" TopLine="120"/>
       </Position3>
       <Position4>
         <Filename Value="super1.pas"/>
-        <Caret Line="582" Column="23" TopLine="561"/>
+        <Caret Line="142" Column="38" TopLine="125"/>
       </Position4>
       <Position5>
         <Filename Value="super1.pas"/>
-        <Caret Line="139" Column="85" TopLine="122"/>
+        <Caret Line="137" Column="104" TopLine="118"/>
       </Position5>
       <Position6>
         <Filename Value="super1.pas"/>
-        <Caret Line="137" Column="78" TopLine="122"/>
+        <Caret Line="601" Column="34" TopLine="565"/>
       </Position6>
       <Position7>
         <Filename Value="super1.pas"/>
-        <Caret Line="584" Column="17" TopLine="562"/>
+        <Caret Line="141" Column="16" TopLine="124"/>
       </Position7>
       <Position8>
         <Filename Value="super1.pas"/>
-        <Caret Line="137" Column="79" TopLine="122"/>
+        <Caret Line="16" Column="5"/>
       </Position8>
       <Position9>
         <Filename Value="super1.pas"/>
-        <Caret Line="139" Column="82" TopLine="124"/>
+        <Caret Line="141" Column="11" TopLine="121"/>
       </Position9>
       <Position10>
         <Filename Value="super1.pas"/>
-        <Caret Line="145" Column="13" TopLine="122"/>
+        <Caret Line="327" Column="18" TopLine="297"/>
       </Position10>
       <Position11>
         <Filename Value="super1.pas"/>
-        <Caret Line="139" Column="34" TopLine="122"/>
+        <Caret Line="592" Column="3" TopLine="503"/>
       </Position11>
       <Position12>
         <Filename Value="super1.pas"/>
-        <Caret Line="146" Column="11" TopLine="130"/>
+        <Caret Line="649" Column="5" TopLine="637"/>
       </Position12>
       <Position13>
         <Filename Value="super1.pas"/>
-        <Caret Line="137" Column="119" TopLine="120"/>
+        <Caret Line="651" Column="30" TopLine="635"/>
       </Position13>
       <Position14>
         <Filename Value="super1.pas"/>
-        <Caret Line="569" Column="44" TopLine="547"/>
+        <Caret Line="304" Column="73" TopLine="135"/>
       </Position14>
       <Position15>
         <Filename Value="super1.pas"/>
-        <Caret Line="137" Column="124" TopLine="120"/>
+        <Caret Line="139" Column="143" TopLine="122"/>
       </Position15>
       <Position16>
-        <Filename Value="super1.pas"/>
-        <Caret Line="142" Column="38" TopLine="125"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="83" Column="87" TopLine="50"/>
       </Position16>
       <Position17>
-        <Filename Value="super1.pas"/>
-        <Caret Line="137" Column="104" TopLine="118"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="71" TopLine="50"/>
       </Position17>
       <Position18>
-        <Filename Value="super1.pas"/>
-        <Caret Line="601" Column="34" TopLine="565"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="72" TopLine="50"/>
       </Position18>
       <Position19>
-        <Filename Value="super1.pas"/>
-        <Caret Line="141" Column="16" TopLine="124"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="73" TopLine="50"/>
       </Position19>
       <Position20>
-        <Filename Value="super1.pas"/>
-        <Caret Line="16" Column="5"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="75" TopLine="50"/>
       </Position20>
       <Position21>
-        <Filename Value="super1.pas"/>
-        <Caret Line="141" Column="11" TopLine="121"/>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <Caret Line="2866" TopLine="2849"/>
       </Position21>
       <Position22>
-        <Filename Value="super1.pas"/>
-        <Caret Line="137" Column="76" TopLine="297"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="70" TopLine="50"/>
       </Position22>
       <Position23>
-        <Filename Value="super1.pas"/>
-        <Caret Line="327" Column="18" TopLine="297"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="71" TopLine="50"/>
       </Position23>
       <Position24>
-        <Filename Value="super1.pas"/>
-        <Caret Line="648" Column="3" TopLine="667"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="72" TopLine="50"/>
       </Position24>
       <Position25>
-        <Filename Value="super1.pas"/>
-        <Caret Line="592" Column="3" TopLine="503"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="71" Column="12" TopLine="50"/>
       </Position25>
       <Position26>
-        <Filename Value="super1.pas"/>
-        <Caret Line="649" Column="5" TopLine="637"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="75" TopLine="50"/>
       </Position26>
       <Position27>
-        <Filename Value="super1.pas"/>
-        <Caret Line="280" Column="4" TopLine="518"/>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <Caret Line="2866" TopLine="2849"/>
       </Position27>
       <Position28>
-        <Filename Value="super1.pas"/>
-        <Caret Line="651" Column="30" TopLine="635"/>
+        <Filename Value="super2.pas"/>
+        <Caret Line="70" TopLine="50"/>
       </Position28>
       <Position29>
         <Filename Value="super1.pas"/>
-        <Caret Line="304" Column="73" TopLine="135"/>
+        <Caret Line="587" TopLine="568"/>
       </Position29>
       <Position30>
         <Filename Value="super1.pas"/>
-        <Caret Line="139" Column="143" TopLine="122"/>
+        <Caret Line="53" Column="15" TopLine="37"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

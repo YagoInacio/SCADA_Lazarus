@@ -140,7 +140,7 @@ begin
      begin
      with (components[i] as TImage) do
         begin
-        //bitbtn1.Caption:=name;
+        bitbtn1.Caption:=name;
         if digIn[tag] then Picture.loadFromFile(stateOn[tag]) else Picture.loadFromFile(stateOff[tag]);
         end;
         end;
@@ -544,52 +544,52 @@ begin
   end;
 
   i:=0;
-  listbox1.Items.LoadFromFile('button.txt');
-  while listbox1.Items.count >0 do
-  begin
-    BT:= Timage.create(form1);
-    BT.parent:= form1;
-
-    BT.tag := strtoint(listbox1.Items[0]);
-    listbox1.Items.Delete(0);
-
-    BT.top := strtoint(listbox1.Items[0]);
-    listbox1.Items.delete(0);
-
-    BT.left := strtoint(listbox1.Items[0]);
-    listbox1.Items.delete(0);
-
-    buttonimg[BT.tag] := listbox1.Items[0];
-    BT.Picture.loadFromFile(buttonimg[BT.tag]);
-    listbox1.Items.delete(0);
-
-    command[BT.tag] := StrToBool(listbox1.items[0]);
-    listbox1.items.delete(0);
-
-    stateCommandOn[BT.tag] := (listbox1.items[0])[1];
-    listbox1.items.delete(0);
-
-    stateCommandOff[BT.tag] := (listbox1.Items[0])[1];
-    listbox1.items.delete(0);
-
-    BT.hint := (listbox1.items[0]);
-    listbox1.items.delete(0);
-
-    If command[BT.tag] then
-    Begin
-         BT.onclick := btPWMmais.onclick;
-    end;
-
-
-    BT.Visible:=true;
-    BT.name := 'BT'+inttostr(i);
-    i:=i+1;
-
-
-
-
-
-  end;
+  //listbox1.Items.LoadFromFile('button.txt');
+  //while listbox1.Items.count >0 do
+  //begin
+  //  BT:= Timage.create(form1);
+  //  BT.parent:= form1;
+  //
+  //  BT.tag := strtoint(listbox1.Items[0]);
+  //  listbox1.Items.Delete(0);
+  //
+  //  BT.top := strtoint(listbox1.Items[0]);
+  //  listbox1.Items.delete(0);
+  //
+  //  BT.left := strtoint(listbox1.Items[0]);
+  //  listbox1.Items.delete(0);
+  //
+  //  buttonimg[BT.tag] := listbox1.Items[0];
+  //  BT.Picture.loadFromFile(buttonimg[BT.tag]);
+  //  listbox1.Items.delete(0);
+  //
+  //  command[BT.tag] := StrToBool(listbox1.items[0]);
+  //  listbox1.items.delete(0);
+  //
+  //  stateCommandOn[BT.tag] := (listbox1.items[0])[1];
+  //  listbox1.items.delete(0);
+  //
+  //  stateCommandOff[BT.tag] := (listbox1.Items[0])[1];
+  //  listbox1.items.delete(0);
+  //
+  //  BT.hint := (listbox1.items[0]);
+  //  listbox1.items.delete(0);
+  //
+  //  If command[BT.tag] then
+  //  Begin
+  //       BT.onclick := btPWMmais.onclick;
+  //  end;
+  //
+  //
+  //  BT.Visible:=true;
+  //  BT.name := 'BT'+inttostr(i);
+  //  i:=i+1;
+  //
+  //
+  //
+  //
+  //
+  //end;
 
   //Timer2.Enabled := true;
 end;
